@@ -9,7 +9,7 @@ The site is plain HTML, CSS and JavaScript, with no framework, third-party scrip
 Use Node.js 22 or newer and PowerShell 7 for the privacy check.
 
 ```sh
-node --test scripts/verify-site.test.mjs
+node --test scripts/verify-site.test.mjs scripts/check-privacy.test.mjs
 node scripts/verify-site.mjs
 node scripts/build-site.mjs
 python -m http.server 8793 --bind 127.0.0.1 --directory dist

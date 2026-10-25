@@ -21,7 +21,7 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       - name: Verify public source and rejection cases
         run: |
-          node --test scripts/verify-site.test.mjs
+          node --test scripts/verify-site.test.mjs scripts/check-privacy.test.mjs
           node scripts/verify-site.mjs
       - name: Check tracked content for private data
         shell: pwsh

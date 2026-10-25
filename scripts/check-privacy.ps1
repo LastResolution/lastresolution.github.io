@@ -89,7 +89,10 @@ else {
     $paths = [Text.Encoding]::UTF8.GetString((Read-GitBytes $arguments)).Split([char]0, [StringSplitOptions]::RemoveEmptyEntries)
     $fileCount = $paths.Count
     foreach ($path in $paths) {
-        $bytes = if ($Staged) { Read-GitBytes @('show', ":$path") } else { [IO.File]::ReadAllBytes((Join-Path $repoRoot $path)) }
+        # Assign directly: an empty byte array would otherwise disappear into
+        # PowerShell's pipeline and become null (for example, .nojekyll).
+        if ($Staged) { $bytes = Read-GitBytes @('show', ":$path") }
+        else { $bytes = [IO.File]::ReadAllBytes((Join-Path $repoRoot $path)) }
         Test-PrivateBytes $bytes $path
     }
 }
