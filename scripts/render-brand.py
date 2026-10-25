@@ -1,4 +1,4 @@
-"""Render the site's own vector/typographic brand assets; no input photos are used.
+"""Render favicon and social derivatives of the supplied public profile artwork.
 
 Optional development helper, requiring Pillow. Fonts come from known system-font
 locations with a DejaVu fallback. Deployment uses the committed output directly.
@@ -8,22 +8,16 @@ from pathlib import Path
 from PIL import Image, ImageDraw, ImageFont
 
 ASSETS = Path(__file__).resolve().parent.parent / "assets"
-FOREST, LIME, PAPER = "#153e30", "#d7ee80", "#f6f5ef"
+FOREST, PAPER = "#153e30", "#f6f5ef"
 
 
 def mark(size):
-    """Rasterize the same monogram geometry used by mark.svg at the given size."""
-    scale = 6
-    image = Image.new("RGBA", (600, 600), (0, 0, 0, 0))
-    draw = ImageDraw.Draw(image)
-    box = lambda values: tuple(round(value * scale) for value in values)
-    draw.rounded_rectangle(box((0, 0, 100, 100)), radius=22 * scale, fill=FOREST)
-    draw.polygon([box(p) for p in [(22, 24), (32, 24), (32, 64), (46, 64), (46, 74), (22, 74)]], fill=LIME)
-    draw.rectangle(box((51, 24, 61, 74)), fill=LIME)
-    draw.polygon([box(p) for p in [(61, 48), (82, 74), (70, 74), (53, 52)]], fill=LIME)
-    draw.rounded_rectangle(box((51, 24, 83, 56)), radius=16 * scale, fill=LIME)
-    draw.rectangle(box((51, 24, 66, 56)), fill=LIME)
-    draw.rounded_rectangle(box((59, 34, 73, 46)), radius=6 * scale, fill=FOREST)
+    """Resize the public avatar while preserving its aspect ratio and transparency."""
+    with Image.open(ASSETS / "avatar.png") as source:
+        if source.width != source.height:
+            raise ValueError("Profile artwork must be square; cropping is not automatic.")
+        image = source.convert("RGBA")
+        image.info.clear()
     return image.resize((size, size), Image.Resampling.LANCZOS)
 
 
@@ -40,8 +34,6 @@ def font(size, bold=False, italic=False):
 
 if __name__ == "__main__":
     ASSETS.mkdir(exist_ok=True)
-    svg = (ASSETS / "mark.svg").read_text(encoding="utf-8")
-    (ASSETS / "favicon.svg").write_text(svg, encoding="utf-8", newline="\n")
     mark(96).save(ASSETS / "favicon.png", optimize=True)
     mark(180).save(ASSETS / "apple-touch-icon.png", optimize=True)
     mark(256).save(ASSETS.parent / "favicon.ico", sizes=[(16, 16), (32, 32), (48, 48), (64, 64)])

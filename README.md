@@ -27,6 +27,6 @@ Keep the root `WebSite` name and `og:site_name` consistent with LastResolution. 
 
 Public identity is limited to the LastResolution handle and public project/support URLs. Do not add private contact details, local paths, application inventories, settings, credentials or unpublished projects. Use a GitHub noreply commit identity and run `scripts/check-privacy.ps1 -Staged` before committing.
 
-ReStart screenshots use its English demonstration layout and sample data. They and the ReStart logo come from the [ReStart repository](https://github.com/LastResolution/ReStart). Third-party product names and icons shown within the screenshots belong to their respective owners. The portfolio mark and social image are local vector/typographic artwork.
+ReStart screenshots use its English demonstration layout and sample data. They and the ReStart logo come from the [ReStart repository](https://github.com/LastResolution/ReStart). Third-party product names and icons shown within the screenshots belong to their respective owners. The profile artwork was supplied by LastResolution; its metadata is removed from the public copy. Favicons and the social preview reuse that artwork. The optional `scripts/render-brand.py` helper regenerates these derivatives from `assets/avatar.png` using Pillow and local fonts.
 
 Source and artwork are available under the [MIT license](LICENSE).

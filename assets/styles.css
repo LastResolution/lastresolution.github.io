@@ -59,7 +59,7 @@
 
 @layer components {
   .brand { display:inline-flex; align-items:center; flex-shrink:0; gap:11px; text-decoration:none; font-size:1.1rem; letter-spacing:-.04em; font-weight:650; }
-  .brand img { border-radius:8px; width:38px; height:38px; }
+  .brand img { border-radius:50%; width:38px; height:38px; }
   .brand-dot { color:var(--muted); }
   .header-inner nav a { text-decoration:none; font-size:.85rem; font-weight:500; }
   .header-inner nav a:hover,.quiet-link:hover { text-decoration:underline; }
@@ -83,7 +83,7 @@
   .art-caption { margin-top:10px; }
   .art-board { position:relative; aspect-ratio:1.08; overflow:hidden; background:var(--surface); border:1px solid var(--line); border-radius:5px; }
   .art-grid { position:absolute; inset:0; background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px); background-size:36px 36px; opacity:.5; }
-  .art-mark { position:absolute; top:13%; left:20%; width:61%; border-radius:20%; transform:rotate(-9deg); box-shadow:16px 22px 0 color-mix(in srgb,var(--ink) 9%,transparent); }
+  .art-mark { position:absolute; top:10%; left:18%; width:64%; border-radius:50%; filter:drop-shadow(0 16px 18px #0002); }
   .art-note { position:absolute; left:20px; bottom:20px; font-size:.64rem; font-family:"Cascadia Code",Consolas,monospace; line-height:1.5; }
   .art-spark { position:absolute; right:23px; bottom:13px; font-size:2.5rem; line-height:1; }
   .art-corner { position:absolute; width:9px; height:9px; border-color:var(--ink); border-style:solid; border-width:0; }
@@ -154,7 +154,7 @@
     .shell { width:calc(100% - 40px); }
     .header-inner { min-height:76px; gap:16px; flex-wrap:wrap; padding-block:14px 12px; }
     .brand { font-size:1rem; }
-    .brand img { width:30px; height:30px; border-radius:6px; }
+    .brand img { width:30px; height:30px; }
     .header-inner nav { order:3; width:100%; justify-content:space-between; gap:18px; }
     .header-inner nav a { font-size:.75rem; }
     .theme-control { margin-left:auto; padding-left:13px; gap:6px; }

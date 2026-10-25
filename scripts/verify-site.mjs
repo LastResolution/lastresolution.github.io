@@ -6,7 +6,7 @@ import { createHash } from 'node:crypto';
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 export const publicFiles = Object.freeze([
   'index.html', 'robots.txt', 'sitemap.xml', 'favicon.ico', '.nojekyll',
-  'assets/styles.css', 'assets/site.js', 'assets/mark.svg', 'assets/favicon.svg',
+  'assets/styles.css', 'assets/site.js', 'assets/avatar.png',
   'assets/favicon.png', 'assets/apple-touch-icon.png', 'assets/social-preview.png',
   'assets/restart-logo.png', 'assets/restart-dark.png', 'assets/restart-light.png'
 ]);
