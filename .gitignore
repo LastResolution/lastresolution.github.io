@@ -1,0 +1,9 @@
+AGENTS.md
+artifacts/
+dist/
+node_modules/
+.env
+.env.*
+*.log
+*.zip
+.DS_Store
