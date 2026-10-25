@@ -8,7 +8,7 @@ from pathlib import Path
 from PIL import Image, ImageDraw, ImageFont
 
 ASSETS = Path(__file__).resolve().parent.parent / "assets"
-FOREST, PAPER = "#153e30", "#f6f5ef"
+INK, PAPER = "#1c3345", "#f4f6f8"
 
 
 def mark(size):
@@ -40,12 +40,12 @@ if __name__ == "__main__":
     preview = Image.new("RGB", (1280, 640), PAPER)
     draw = ImageDraw.Draw(preview)
     preview.paste(mark(72), (64, 56), mark(72))
-    draw.text((156, 68), "LastResolution", font=font(31, bold=True), fill=FOREST)
-    draw.line((64, 158, 1216, 158), fill="#cbd1c5", width=2)
-    draw.text((64, 195), "Ideas into", font=font(106, bold=True), fill=FOREST)
-    draw.text((64, 309), "useful things.", font=font(108, italic=True), fill=FOREST)
+    draw.text((156, 68), "LastResolution", font=font(31, bold=True), fill=INK)
+    draw.line((64, 158, 1216, 158), fill="#ccd6df", width=2)
+    draw.text((64, 195), "Ideas into", font=font(106, bold=True), fill=INK)
+    draw.text((64, 309), "useful things.", font=font(108, italic=True), fill=INK)
     preview.paste(mark(260), (956, 207), mark(260))
-    draw.text((64, 524), "Independent software. Room to explore.", font=font(27), fill=FOREST)
-    draw.text((64, 576), "lastresolution.github.io", font=font(19), fill="#526257")
+    draw.text((64, 524), "Independent software. Room to explore.", font=font(27), fill=INK)
+    draw.text((64, 576), "lastresolution.github.io", font=font(19), fill="#526579")
     preview.save(ASSETS / "social-preview.png", optimize=True)
     print("Rendered local brand assets and 1280 × 640 social preview.")
