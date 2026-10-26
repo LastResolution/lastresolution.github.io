@@ -86,8 +86,18 @@ export async function verifySite(directory = root, { distribution = false } = {}
   require(css.includes('prefers-reduced-motion:reduce') && css.includes('prefers-color-scheme:dark') && css.includes('forced-colors:active'), 'Missing display/accessibility preferences.');
   require(css.includes('max-width:760px') && css.includes('max-width:370px'), 'Missing mobile layouts.');
   require(!/\b(?:eval|fetch|XMLHttpRequest)\s*\(|document\.cookie|sendBeacon|serviceWorker/.test(js), 'Unexpected runtime data/remote execution.');
-  const policy = meta.find(item => item['http-equiv'] === 'Content-Security-Policy')?.content;
-  require(policy?.includes("connect-src 'none'") && !policy.includes('unsafe-inline'), 'Missing restrictive content policy.');
+  const policies = meta.filter(item => item['http-equiv']?.toLowerCase() === 'content-security-policy');
+  require(policies.length === 1, 'A single restrictive content policy is required.');
+  const expectedPolicy = {
+    'default-src': "'none'", 'img-src': "'self'", 'style-src': "'self'", 'script-src': "'self'",
+    'connect-src': "'none'", 'base-uri': "'none'", 'form-action': "'none'", 'object-src': "'none'"
+  };
+  const directives = policies[0].content.split(';').map(value => value.trim()).filter(Boolean).map(value => {
+    const [name, ...sources] = value.split(/\s+/);
+    return [name, sources.join(' ')];
+  });
+  require(directives.length === Object.keys(expectedPolicy).length && new Set(directives.map(([name]) => name)).size === directives.length, 'Unexpected or duplicate content policy directives.');
+  for (const [name, sources] of directives) require(Object.hasOwn(expectedPolicy, name) && sources === expectedPolicy[name], 'Content policy permits an unexpected capability.');
   const publicSet = new Set(publicFiles);
   const allowedHosts = new Set(['github.com','buymeacoffee.com']);
   for (const target of [...tags(html,'a').map(a=>a.href),...tags(html,'img').map(a=>a.src),...tags(html,'source').map(a=>a.srcset),...tags(html,'script').map(a=>a.src),...tags(html,'link').map(a=>a.href)].filter(Boolean)) {

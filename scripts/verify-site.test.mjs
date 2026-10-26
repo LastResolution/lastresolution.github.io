@@ -63,3 +63,18 @@ test('identical theme screenshots are rejected',()=>fixture(async root=>{
   await cp(path.join(root,'assets/restart-light.png'),path.join(root,'assets/restart-dark.png'));
   await assert.rejects(verifySite(root),/screenshots must differ/);
 }));
+
+test('form submission cannot be enabled by omitting its independent directive',()=>fixture(async root=>{
+  await change(root,'index.html',"form-action 'none'; ",'');
+  await assert.rejects(verifySite(root),/content policy/);
+}));
+
+test('an overriding script directive cannot bypass the default script policy',()=>fixture(async root=>{
+  await change(root,'index.html',"script-src 'self';", "script-src 'self'; script-src-elem https://example.invalid;");
+  await assert.rejects(verifySite(root),/content policy/);
+}));
+
+test('unused image source permissions cannot silently return',()=>fixture(async root=>{
+  await change(root,'index.html',"img-src 'self';", "img-src 'self' data:;");
+  await assert.rejects(verifySite(root),/Content policy/);
+}));
